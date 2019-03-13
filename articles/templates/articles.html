@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Artykuły{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+    <!-- flex hovering add article button for mods-->
+    {% if request.user.is_staff or request.user.is_superuser %}
+        <a href="{% url 'add-article' %}">
+            <button type="button" class="btn btn-info position-fixed" style="right: 5%; bottom: 82%">
+                Dodaj artykuł
+            </button>
+        </a>
+    {% endif %}
+
+    <!-- article cards -->
+    {% for article in articles %}
+        <div class="my-4">
+            {# modify/del buttons near articles if permissions #}
+            {% if article.author == request.user or request.user.is_superuser %}
+                {% include 'edit_buttons.html' with item=article %}
+            {% endif %}
+            <!-- true article card -->
+            <div class="card border-0 mx-auto base-card card-js" data-id="{{ article.id }}">
+                <!-- title -->
+                <div class="card-header bg-dark text-light">
+                    {{ article.title }}
+                </div>
+                <!-- body -->
+                <div class="card-body">
+                    <!-- split -->
+                    <div class="row">
+                        <!-- img -->
+                        <div class="col-3">
+                            <img class="card-img" src="{% if article.cover_image %}{{ article.cover_image.url }}{% else %}{% static 'img/empty-photo.jpg' %}{% endif %} " alt="Tu powinien być obrazek" width="180">
+                        </div>
+                        <!-- content, dates, author -->
+                        <div class="col-9">
+                            <p class="card-text">{{ article.content|safe|truncatewords:6 }}</p>
+                            {% include 'article_footer.html' %}
+                        </div>
+                    <!-- end splitting -->
+                    </div>
+                <!-- end body -->
+                </div>
+            <!-- end card -->
+            </div>
+        <!-- and parent div -->
+        </div>
+    {% endfor %}
+
+    <!-- pagination links -->
+    {% if articles.has_other_pages %}
+        <ul class="pagination justify-content-center">
+            {% if articles.has_previous %}
+                <li class="page-item">
+                    <a class="page-link bg-dark border-0" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link bg-dark border-0">&laquo;</span>
+                </li>
+            {% endif %}
+            {% for p in articles.paginator.page_range %}
+                <li class="page-item">
+                    <a class="page-link bg-dark border-0" href="?page={{ p }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+            {% if articles.has_next %}
+                <li class="page-item">
+                    <a class="page-link bg-dark border-0" href="?page={{ articles.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link bg-dark border-0">&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+{% endblock %}

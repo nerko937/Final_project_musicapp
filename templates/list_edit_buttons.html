@@ -1,0 +1,22 @@
+{% if request.user.is_staff or request.user.is_superuser %}
+    {# checks type of li element, adds correct url #}
+    <a href="{% if item.band %}
+                {% url 'modify-album' album_id=item.id %}
+             {% elif item.duration %}
+                {% url 'modify-song' song_id=item.id %}
+             {% else %}
+                {% url 'modify-band' band_id=item.id %}
+             {% endif %}" class="edit-btn">
+        <i class="fas fa-wrench list-icon-redirect"></i>
+    </a>
+    {# checks type of li element, adds correct url #}
+    <a href="{% if item.band %}
+                {% url 'delete-album' album_id=item.id %}{{ next }}
+             {% elif item.duration %}
+                {% url 'delete-song' song_id=item.id %}
+             {% else %}
+                {% url 'delete-band' band_id=item.id %}{{ next }}
+             {% endif %}" class="del-btn">
+        <i class="fas fa-trash-alt list-icon-redirect"></i>
+    </a>
+{% endif %}

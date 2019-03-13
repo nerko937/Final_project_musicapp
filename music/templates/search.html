@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- flex hovering add band button for mods-->
+    {% if request.user.is_staff or request.user.is_superuser %}
+        <a href="{% url 'add-band' %}">
+            <button type="button" class="btn btn-info position-fixed" style="right: 5%; bottom: 82%">
+                Dodaj zespół
+            </button>
+        </a>
+    {% endif %}
+
+    <!-- base card -->
+    <div class="card border-0 mx-auto my-5 base-card text-center" style="height: 341px">
+        <!-- card body -->
+        <div class="card-body">
+            <!-- search form -->
+            <form method="post" class="mt-4">
+                <!-- base label -->
+                <h4 class="card-title">
+                    <label for="id_search_field">Wyszukaj zespół lub płytę</label>
+                </h4>
+                <!-- primary search fields -->
+                <p class="card-text">
+                    <div class="form-row align-items-center">
+                        <div class="col-5 ml-auto">
+                            {% csrf_token %}
+                            {{ form.search_field }}
+                        </div>
+                        <div class="col-1 mr-auto ml-3">
+                            <button type="submit" class="btn btn-primary">Wyślij</button>
+                        </div>
+                    </div>
+                </p>
+                <!-- checkboxes for results filtering -->
+                <p class="card-text align-items-center">
+                    <div class="form-check form-check-inline">
+                        {{ form.search_bands }}
+                        <label class="form-check-label" for="id_search_bands">
+                            zespoły
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        {{ form.search_albums }}
+                        <label class="form-check-label" for="id_search_albums">
+                            płyty
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        {{ form.search_songs }}
+                        <label class="form-check-label" for="id_search_songs">
+                            utwory
+                        </label>
+                    </div>
+                </p>
+                <!-- genre filter buttons and show all -->
+                <p class="card-text mb-4">
+                    {% for genre in genres %}
+                        <input type="submit" class="btn btn-outline-secondary mb-1" name="{{ genre }}" value="{{ genre }}">
+                    {% endfor %}
+                    <input type="submit" class="btn btn-outline-dark mb-1" name="all" value="Pokaż wszystkie">
+                </p>
+            </form>
+        </div>
+    </div>
+
+    {% block results %}{% endblock %}
+
+{% endblock %}

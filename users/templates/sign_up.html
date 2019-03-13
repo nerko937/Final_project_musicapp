@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <!-- sign up card -->
+    <div class="card border-0 mx-auto my-5" style="width: 25rem">
+        <!-- header -->
+        <div class="card-header bg-dark text-light text-center">
+            {{ title }}
+        </div>
+        <!-- card's form/body -->
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {% load crispy_forms_tags %}
+                {{ form|crispy }}
+                <button class="btn btn-info btn-block" type="submit">Wyślij</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

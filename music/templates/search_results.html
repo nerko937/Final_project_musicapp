@@ -1,0 +1,74 @@
+{% extends 'search.html' %}
+
+{% load static %}
+
+{% block results %}
+
+    <!-- base card -->
+    <div class="card border-0 mx-auto my-5 base-card">
+        <!-- card body -->
+        <div class="card-body">
+            <!-- search results -->
+            <ul class="list-group">
+                {% for result in results %}
+                    <li class="p-2 list-group-item
+                        {# checks type of result adds different style and dataset for href #}
+                        {% if result.band %}
+                            list-group-item-secondary" data-album-id="{{ result.id }}"
+                        {% elif result.duration %}
+                            song-list-item" data-song-id="{{ result.id }}"
+                        {% else %}
+                            list-group-item-dark" data-band-id="{{ result.id }}"
+                        {% endif %}>
+                        <!-- splits li horizontal -->
+                        <div class="row align-items-center">
+                            <!-- image col -->
+                            <div class="col-1 pl-4 pt-1">
+                                {% if result.cover_image %}
+                                    <img src="{{ result.cover_image.url }}" alt="img" class="card-img">
+                                {% else %}
+                                    <i class="fas fa-image fa-2x text-muted"></i>
+                                {% endif %}
+                            </div>
+                            <!-- title col -->
+                            <div class="col-6">
+                                {{ result.name|truncatewords:5 }}
+                            </div>
+                            <!-- type of result col -->
+                            <div class="col-1 px-1 text-center text-muted">
+                                {% if result.band %}
+                                    Płyta
+                                {% elif result.duration %}
+                                    Utwór
+                                {% else %}
+                                    Zespół
+                                {% endif %}
+                            </div>
+                            <!-- creation year/duration col -->
+                            <div class="col-1 px-1 text-muted">
+                                {% if result.creation_year %}
+                                    {{ result.creation_year }}
+                                {% elif result.duration %}
+                                    {{ result.duration }}
+                                {% endif %}
+                            </div>
+                            <!-- edit buttons col for mods -->
+                            <div class="col-1">
+                                {% include 'list_edit_buttons.html' with item=result %}
+                            </div>
+                            <!-- genre col -->
+                            <div class="col-2 text-right pr-4 pl-1">
+                                {% if result.duration %}
+                                    {{ result.album.genre }}
+                                {% else %}
+                                    {{ result.genre }}
+                                {% endif %}
+                            </div>
+                        <!-- end splitting -->
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

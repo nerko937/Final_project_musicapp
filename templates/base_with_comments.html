@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block comments %}
+
+    {% for comment in comments %}
+        {# card #}
+        <div class="card mx-auto my-2 base-card">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {# author #}
+                    <div class="row">
+                        <div class="col-6">
+                            {{ comment.author.username }}
+                        </div>
+                        {# edit/del links if permission #}
+                        <div class="col-6 text-right">
+                            {% if request.user.is_staff and not comment.author.is_staff or request.user == comment.author or request.user.is_superuser %}
+                                <a class="card-link" href="{% url 'modify-comment' comment_id=comment.id %}{{ next }}">
+                                    edytuj
+                                </a>
+                                <a class="card-link del-btn" href="{% url 'delete-comment' comment_id=comment.id %}{{ next }}">
+                                    usuń
+                                </a>
+                            {% endif %}
+                    </div>
+                </h6>
+                {# comment #}
+                <p class="card-text">
+                    {{ comment.comment }}
+                </p>
+                {# creation/modification dates #}
+                <div class="row">
+                    <div class="col-6">
+                        {% if comment.modification_date %}
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Data modyfikacji: {{ comment.modification_date|date:"d-m-Y G:i" }}
+                                </small>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-6 text-right">
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Data utworzenia: {{ comment.creation_date|date:"d-m-Y G:i" }}
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <!-- add comment form if logged -->
+    <div class="card border-0 mx-auto my-2 base-card text-center">
+        <div class="card-body">
+            {% if request.user.is_authenticated %}
+                <form method="post" class="comment" action="{% url 'send-comment' %}{{ next }}">
+                    {% csrf_token %}
+                    {% load crispy_forms_tags %}
+                    {{ form|crispy }}
+                    <button class="btn btn-info btn-block" type="submit">Wyślij</button>
+                </form>
+            {% else %}
+                <p class="card-text">Zaloguj się aby dodać komentarz.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="my-4"></div>
+
+{% endblock %}

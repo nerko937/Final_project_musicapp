@@ -1,0 +1,14 @@
+{# author, creation date etc. #}
+<div class="row">
+    <div class="col-4">
+        <p class="card-text"><small class="text-muted">Autor:<br>{{ article.author.username }}</small></p>
+    </div>
+    <div class="col-4 text-center">
+        {% if article.modification_date %}
+            <p class="card-text"><small class="text-muted">Data modyfikacji:<br>{{ article.modification_date|date:"d-m-Y G:i" }}</small></p>
+        {% endif %}
+    </div>
+    <div class="col-4 text-right">
+        <p class="card-text"><small class="text-muted">Data utworzenia:<br>{{ article.creation_date|date:"d-m-Y G:i" }}</small></p>
+    </div>
+</div>

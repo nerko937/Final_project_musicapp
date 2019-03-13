@@ -1,0 +1,26 @@
+.base-card {
+    width: 840px;
+    /*box-shadow: 1px 1px 3px #1e1e1e;*/
+}
+
+/*
+.card-form-bg {
+    display: none;
+}
+*/
+
+.comment textarea {
+    height: 6rem;
+}
+
+ul li a.page-item, ul li a.page-link {
+    color: #aaaaaa;
+}
+
+.text-bright {
+    color: #aaaaaa;
+}
+
+#editor, #small-editor {
+  height: 375px;
+}

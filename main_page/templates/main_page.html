@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="card base-card mx-auto my-5">
+        <div class="card-body">
+            <!-- carousel -->
+            <div id="carouselIndicators" class="carousel slide card-img" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{% static 'img/vinyl.jpg' %}" alt="First slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Realizuj swoją pasję</h5>
+                            <p>Dzięki nam, w jednym miejscu, zagłębisz się w ulubionym hobby</p>
+                        </div>
+                    </div>
+                    <a class="carousel-item" href="{% url 'articles' %}">
+                        <img class="d-block w-100" src="{% static 'img/articles.jpg' %}" alt="Second slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Najnowsze wiadomości</h5>
+                            <p>Ze świata muzyki</p>
+                        </div>
+                    </a>
+                    <a class="carousel-item" href="{% url 'search' %}">
+                        <img class="d-block w-100" src="{% static 'img/guitar.jpg' %}" alt="Third slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Skupisko muzyki</h5>
+                            <p>Odnajdź ulubione zespoły, płyty i utwory</p>
+                        </div>
+                    </a>
+                </div>
+                <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <!-- some text -->
+            <p class="card-text p-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vehicula lectus eget orci iaculis euismod. Vestibulum elit elit, lacinia quis iaculis at, pellentesque condimentum leo. Cras et mattis enim. Donec et vehicula sapien, sed bibendum nisl. Vestibulum luctus ipsum eget elit pharetra vehicula. Mauris at risus in nisi placerat cursus. Sed tincidunt hendrerit massa vel convallis.
+                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed maximus sem nibh, eget convallis dui vulputate et.
+            </p>
+        </div>
+    </div>
+
+
+
+{% endblock %}

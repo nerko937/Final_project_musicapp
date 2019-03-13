@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <title>{% block title %}Brak tytułu{% endblock %}</title>
+
+    <!-- JQuery -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">    <!-- Bootstrap -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    <!-- Custom styles and scripts -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Quill stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/quill.snow.css' %}">
+    <!-- custom styles -->
+    <script src="{% static 'js/app.js' %}"></script>
+
+    {% block head %}{% endblock %}
+
+</head>
+
+
+<body class="bg-secondary">
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="collapse navbar-collapse">
+
+            <!-- left side nav buttons and stuff -->
+            <a class="navbar-brand" href="{% url 'main-page' %}"><i class="fab fa-itunes-note text-bright"></i></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'articles' %}">Artykuły</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'search' %}">Muzyka</a>
+                </li>
+            </ul>
+
+            <!-- right side login and logged account things-->
+            {% if request.user.is_authenticated %}
+                {# logged #}
+                <!-- username -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="navbar-text mr-sm-2">
+                        {{ request.user.username }}
+                    </li>
+                    <!-- edit profile -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'modify-user' %}{{ next }}"><i class="fas fa-user"></i></a>
+                    </li>
+                    <!-- logout -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}{{ next }}"><i class="fas fa-sign-out-alt"></i></a>
+                    </li>
+                </ul>
+
+            {% else %}
+                {# annomyous #}
+                <ul class="navbar-nav ml-auto">
+                    <!-- sign up -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sign-up' %}{{ next }}">Zarejestruj się</a>
+                    </li>
+                </ul>
+                <!-- login -->
+                <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'login' %}{{ next }}">
+                    {% csrf_token %}
+                    {{ login_form.username }}
+                    {{ login_form.password }}
+                    <button class="btn btn-info my-2 my-sm-0" type="submit">Zaloguj</button>
+                </form>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    {% block comments %}
+    {% endblock %}
+
+    <!-- Delete modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Spowoduje to usunięcie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    czy napewno chcesz to zrobić?
+                </div>
+                <div class="modal-footer">
+                    <button id="modalNo" type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+                    <button id="modalYes" type="button" class="btn btn-danger">Tak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="card-footer bg-dark clearfix">
+        <!-- icons -->
+        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-square fa-3x text-muted float-left m-5"></i></a>
+        <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-3x text-muted float-left my-5"></i></a>
+        <!-- contact details -->
+        <span class="text-bright float-right m-5">
+            Jan Kowalski
+            <br>
+            mejl@onet.pl
+        </span>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+{% extends 'base_with_comments.html' %}
+
+{% block title %}{{ band.name }}{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+    {# modify/del buttons nearby if permissions #}
+    {% if request.user.is_staff or request.user.is_superuser %}
+        {% include 'edit_buttons.html' with item=band %}
+    {% endif %}
+    <!-- card -->
+    <div class="card border-0 mx-auto my-4 base-card">
+        <!-- card body -->
+        <div class="card-body">
+            <!-- title -->
+            <h3 class="card-title text-center">{{ band.name }}</h3>
+            <!-- split body into two columns -->
+            <div class="row">
+                <!-- first column -->
+                <div class="col-6">
+                    <!-- img -->
+                    <img class="card-img cover-img" src="{% if band.cover_image %}{{ band.cover_image.url }}{% else %}{% static 'img/empty-photo.jpg' %}{% endif %}" alt="Tu powinien być obrazek" style="width: 385px">
+                    <!-- spotify -->
+                    <div class="text-center my-3">
+                        {% if band.spotify_follow %}
+                            {{ band.spotify_follow|safe }}
+                        {% endif %}
+                        {% if band.spotify_play %}
+                            {{ band.spotify_play|safe }}
+                        {% endif %}
+                    </div>
+                    <!-- minor info -->
+                    {% if band.creation_year %}
+                        <p class="card-text">
+                            <small>
+                                Rok założenia: {{ band.creation_year }}
+                            </small>
+                        </p>
+                    {% endif %}
+                    <p class="card-text">
+                        <small>Gatunek: {{ band.genre }}</small>
+                    </p>
+                    <p class="card-text">
+                        <small>
+                            Członkowie zespołu:
+                            {% for musician in musicians %}
+                                {{ musician.name }}
+                                {{ forloop.last|yesno:",&#44;"|safe }}
+                            {% endfor %}
+                        </small>
+                    </p>
+                </div>
+                <!-- second col -->
+                <div class="col-6">
+                    <!-- description -->
+                    <p class="card-text">{{ band.description }}</p>
+                    <br>
+                    <!-- album list -->
+                    <ul class="list-group">
+                        <li class="list-group-item list-music disabled">Albumy</li>
+                        {% for album in albums %}
+                            <li class="list-group-item list-group-item-secondary" data-album-id="{{ album.id }}">
+                                <div class="row">
+                                    <div class="col-10">
+                                        {{ album.name }}
+                                    </div>
+                                    <div class="col-2 py-0 px-2">
+                                        {% include 'list_edit_buttons.html' with item=album %}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        <li class="list-group-item">
+                            <a href="{% url 'add-album' band_id=band.id %}">
+                                Dodaj album
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <!-- end row -->
+            </div>
+        <!-- end body -->
+        </div>
+    <!-- end card -->
+    </div>
+
+{% endblock %}

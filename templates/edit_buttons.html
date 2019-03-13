@@ -1,0 +1,54 @@
+{# modify and delete buttons #}
+    <div class="position-absolute" style="right: 15%; margin-top: 90px">
+        {# MODIFY #}
+
+            {# article href #}
+        {% if item.author %}
+            <a href="{% url 'modify-article' article_id=item.id %}" class="edit-btn">
+
+            {# album href #}
+        {% elif item.band %}
+            <a href="{% url 'modify-album' album_id=item.id %}" class="edit-btn">
+
+            {# song href #}
+        {% elif item.duration %}
+            <a href="{% url 'modify-song' song_id=item.id %}" class="edit-btn">
+
+            {# band href #}
+        {% else %}
+            <a href="{% url 'modify-band' band_id=item.id %}" class="edit-btn">
+        {% endif %}
+
+            {# button #}
+            <button type="button" class="btn btn-dark d-block">
+                <i class="fas fa-wrench"></i>
+            </button>
+        </a>
+        <br>
+        {# DELETE #}
+
+            {# article href #}
+        {% if item.author %}
+            <a href="{% url 'delete-article' article_id=item.id %}{% if request.path == '/articles/' %}{{ next }}{% endif %}" class="del-btn">
+
+            {# album href #}
+        {% elif item.band %}
+            <a href="{% url 'delete-album' album_id=item.id %}{{ next }}" class="del-btn">
+
+            {# song href #}
+        {% elif item.duration %}
+            <a href="{% url 'delete-song' song_id=item.id %}{{ next }}" class="del-btn">
+
+            {# band href #}
+        {% else %}
+            <a href="{% url 'delete-band' band_id=item.id %}?next=/search/" class="del-btn">
+        {% endif %}
+
+            {# button #}
+            <button type="button" class="btn btn-danger d-block" data-toggle="modal" data-target="#confirmModal">
+                <i class="fas fa-times-circle"></i>
+            </button>
+
+        </a>
+
+    </div>
