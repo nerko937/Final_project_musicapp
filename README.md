@@ -4,7 +4,7 @@ To run this project you have to:
 1. Clone repository.
 2. cd to it.
 3. Find settings.py file inside project directory.
-4. Set correct Django's secret key.
+4. Set correct Django's secret key and debug.
 3. Create virtual environment.
 4. Run `pip install -r requirements.txt`.
 6. Run `python manage.py migrate`.
