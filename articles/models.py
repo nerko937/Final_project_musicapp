@@ -1,6 +1,9 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth import get_user_model
 from music.models import Band, Album
+
+from music.models import validate_html
 
 
 class Article(models.Model):
@@ -16,7 +19,8 @@ class Article(models.Model):
 		max_length=255
 	)
 	content = models.TextField(
-		verbose_name='Treść artykułu'
+		verbose_name='Treść artykułu',
+		validators=[validate_html]
 	)
 	creation_date = models.DateTimeField(
 		auto_now_add=True,

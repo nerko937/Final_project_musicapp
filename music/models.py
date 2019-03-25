@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from multiselectfield import MultiSelectField
@@ -32,6 +33,10 @@ GENRES = (
 	('Rock', 'Rock')
 )
 
+def validate_html(value):
+	if '<script' in value or '</script>' in value:
+		raise ValidationError('Dodawanie skryptów jest zabronione')
+
 
 class Band(models.Model):
 
@@ -64,12 +69,14 @@ class Band(models.Model):
 	spotify_follow = models.CharField(
 		verbose_name='Przycisk obserwowania Spotify',
 		max_length=255,
+		validators=[validate_html],
 		null=True,
 		blank=True
 	)
 	spotify_play = models.CharField(
 		verbose_name='Przycisk odtwarzania Spotify',
 		max_length=255,
+		validators=[validate_html],
 		null=True,
 		blank=True
 	)
@@ -106,6 +113,7 @@ class Album(models.Model):
 	spotify_play = models.CharField(
 		verbose_name='Przycisk odtwarzania Spotify',
 		max_length=255,
+		validators=[validate_html],
 		null=True,
 		blank=True
 	)
@@ -136,6 +144,7 @@ class Song(models.Model):
 	spotify_play = models.CharField(
 		verbose_name='Przycisk odtwarzania Spotify',
 		max_length=255,
+		validators=[validate_html],
 		null=True,
 		blank=True
 	)
