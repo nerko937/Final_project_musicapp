@@ -3,6 +3,11 @@
     /*box-shadow: 1px 1px 3px #1e1e1e;*/
 }
 
+.decoration-none {
+    text-decoration: none !important;
+    color: #212529;
+}
+
 /*
 .card-form-bg {
     display: none;

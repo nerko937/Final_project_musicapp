@@ -7,7 +7,7 @@ from django.http import HttpResponse
 
 from users.forms import CommentForm
 from users.views import prev_page
-from .forms import SearchForm, CreateBandForm, CreateAlbumForm, CreateSongForm
+from .forms import SearchForm, CreateBandForm, CreateAlbumForm, CreateSongForm, CreateMusicianForm
 from .models import Band, Album, Musician, Song, GENRES, INSTRUMENTS
 from .my_context_processor import genres
 from users.models import Comment
@@ -150,6 +150,38 @@ class DeleteBandView(UserPassesTestMixin, View):
 	def get(self, request, band_id):
 		band = Band.objects.get(id=band_id)
 		band.delete()
+		return redirect(prev_page(request))
+
+
+class CreateMusicianView(UserPassesTestMixin, View):
+
+	def test_func(self):
+		return self.request.user.is_staff or self.request.user.is_superuser
+
+	def get(self, request, band_id):
+		band = Band.objects.get(id=band_id)
+		form = CreateMusicianForm(initial={'band': band})
+		ctx = {
+			'form': form,
+			'title': 'Dodawanie nowego muzyka',
+		}
+		return render(request, 'creation_form.html', ctx)
+
+	def post(self, request, band_id):
+		form = CreateMusicianForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('band', band_id=band_id)
+
+
+class DeleteMusicianView(UserPassesTestMixin, View):
+
+	def test_func(self):
+		return self.request.user.is_staff or self.request.user.is_superuser
+
+	def get(self, request, musician_id):
+		musician = Musician.objects.get(id=musician_id)
+		musician.delete()
 		return redirect(prev_page(request))
 
 

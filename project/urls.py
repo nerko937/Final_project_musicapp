@@ -37,7 +37,9 @@ from music.views import (
     SongView,
     CreateSongView,
     ModifySongView,
-    DeleteSongView
+    DeleteSongView,
+    CreateMusicianView,
+    DeleteMusicianView
 )
 
 
@@ -67,6 +69,9 @@ urlpatterns = [
     path('add-band/', CreateBandView.as_view(), name='add-band'),
     path('modify-band/<int:band_id>/', ModifyBandView.as_view(), name='modify-band'),
     path('delete-band/<int:band_id>/', DeleteBandView.as_view(), name='delete-band'),
+    # musicians
+    path('add-musician/<int:band_id>/', CreateMusicianView.as_view(), name='add-musician'),
+    path('delete-musician/<int:musician_id>', DeleteMusicianView.as_view(), name='delete-musician'),
     # albums
     path('album/<int:album_id>/', AlbumView.as_view(), name='album'),
     path('add-album/<int:band_id>/', CreateAlbumView.as_view(), name='add-album'),

@@ -1,6 +1,6 @@
 from django import forms
 
-from music.models import Band, Album, Song
+from music.models import Band, Album, Song, Musician
 
 
 class SearchForm(forms.Form):
@@ -35,6 +35,14 @@ class CreateBandForm(forms.ModelForm):
 	class Meta:
 		model = Band
 		fields = '__all__'
+
+
+class CreateMusicianForm(forms.ModelForm):
+
+	class Meta:
+		model = Musician
+		fields = '__all__'
+		widgets = {'band': forms.HiddenInput()}
 
 
 class CreateAlbumForm(forms.ModelForm):

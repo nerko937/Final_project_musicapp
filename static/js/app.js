@@ -4,17 +4,12 @@ $(function () {
     if (cards.length !== 0) {
         cards.hover(function () {
             $(this)
-                .css({'background-color': 'rgb(213, 215, 255)', 'cursor': 'pointer'})
                 .find('.card-header')
                 .removeClass('bg-dark').addClass('bg-info')
         }, function () {
             $(this)
-                .css('background-color', '')
                 .find('.card-header')
                 .removeClass('bg-info').addClass('bg-dark')
-        });
-        cards.click(function () {
-            window.location = 'http://127.0.0.1:8000/article/' + $(this).attr('data-id') + '/'
         });
     }
     // Quill

@@ -47,8 +47,14 @@
                             Członkowie zespołu:
                             {% for musician in musicians %}
                                 {{ musician.name }}
+                                <a href="{% url 'delete-musician' musician_id=musician.id %}" class="del-btn">
+                                    <i class="fas fa-times text-danger"></i>
+                                </a>
                                 {{ forloop.last|yesno:",&#44;"|safe }}
                             {% endfor %}
+                            <a href="{% url 'add-musician' band_id=band.id %}">
+                                <i class="fas fa-plus"></i>
+                            </a>
                         </small>
                     </p>
                 </div>

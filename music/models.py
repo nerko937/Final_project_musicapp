@@ -154,7 +154,9 @@ class Musician(models.Model):
 	)
 	instruments = MultiSelectField(
 		verbose_name='Instrumenty',
-		choices=INSTRUMENTS
+		choices=INSTRUMENTS,
+		null=True,
+		blank=True
 	)
 	band = models.ForeignKey(
 		Band,
