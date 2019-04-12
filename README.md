@@ -4,6 +4,8 @@ Final project. Website about music - allows to read, post articles, check music 
 
  - Used tools and technologies: Python, Django, django-crispy-forms, django-multiselectfield, Faker, tqdm, JQuery, Quill Rich Text Editor, Bootstrap 4
  - [DEMO](http://marcinfudala.pythonanywhere.com/)
+ 
+![](readme_img/preview.png)
 
 To run this project you have to:
 1. Clone repository.
