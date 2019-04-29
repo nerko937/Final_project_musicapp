@@ -1,4 +1,11 @@
-# Final_project_musicapp
+# Final_project_Music_site_project
+
+Final project. Website about music - allows to read, post articles, check music database eg. bands, albums etc. Creating users, write comments.
+
+ - Used tools and technologies: Python, Django, django-crispy-forms, django-multiselectfield, Faker, tqdm, JQuery, Quill Rich Text Editor, Bootstrap 4
+ - [DEMO](http://marcinfudala.pythonanywhere.com/)
+ 
+![](readme_img/preview.png)
 
 To run this project you have to:
 1. Clone repository.
