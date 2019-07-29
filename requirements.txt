@@ -3,7 +3,6 @@ django-crispy-forms==1.7.2
 django-multiselectfield==0.1.8
 Faker==1.0.2
 Pillow==5.4.1
-pkg-resources==0.0.0
 python-dateutil==2.8.0
 pytz==2018.9
 six==1.12.0
